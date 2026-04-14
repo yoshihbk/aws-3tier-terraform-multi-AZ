@@ -8,9 +8,10 @@ resource "aws_lb" "alb" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
 
+# ALB を配置するサブネット（public 1a / 1c）
   subnets = [
-    aws_subnet.public_a.id,
-    aws_subnet.public_c.id
+    aws_subnet.public_subnet_1a.id,
+    aws_subnet.public_subnet_1c.id
   ]
 
   tags = {
@@ -34,19 +35,5 @@ resource "aws_lb_target_group" "web_tg" {
 
   tags = {
     Name = "web-tg"
-  }
-}
-# ---------------------------------------------------------
-# ALB Listener (HTTP :80)
-# - 受けたリクエストを Target Group に転送
-# ---------------------------------------------------------
-resource "aws_lb_listener" "http_listener" {
-  load_balancer_arn = aws_lb.alb.arn
-  port              = 80
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.web_tg.arn
   }
 }
