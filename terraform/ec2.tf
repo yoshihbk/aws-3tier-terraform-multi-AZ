@@ -27,12 +27,13 @@ dnf install -y nginx
 systemctl enable nginx
 systemctl start nginx
 
-# --- stress-ng をインストール（AL2023 用 正しい手順） ---
-dnf install -y epel-release
+# --- stress-ng（AL2023 は epel 不要） ---
 dnf install -y stress-ng
 
-# --- CPU を常時ぶん回す（2コア）---
-stress-ng --cpu 2 --timeout 0 &
+# --- CPU を常時稼働させる（2コア）---
+# --- 稼働させないとき（動作チェック以外）は
+# --- コメントアウトしておくことを推奨 ---
+      stress-ng --cpu 2 --timeout 0 &
 
 # --- Web ページ配置 ---
 cat <<'HTML' > /usr/share/nginx/html/index.html
@@ -58,5 +59,5 @@ cat <<'HTML' > /usr/share/nginx/html/index.html
 </html>
 HTML
 EOF
-  )
+)
 }
