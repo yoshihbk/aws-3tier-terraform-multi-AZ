@@ -16,3 +16,21 @@ output "asg_name" {
 output "launch_template_id" {
   value = aws_launch_template.web_lt.id
 }
+
+# ---------------------------------------------------------
+# RDS Endpoint 出力
+# - EC2 からMySQLに接続するためのホスト名
+# ---------------------------------------------------------
+output "rds_endpoint" {
+  description = "RDS MySQL endpoint"
+  value       = aws_db_instance.mysql.address
+}
+
+# ---------------------------------------------------------
+# RDS Port 出力
+# - MySQL の接続ポート（通常 3306）
+# ---------------------------------------------------------
+output "rds_port" {
+  description = "RDS MySQL port"
+  value       = aws_db_instance.mysql.port
+}
